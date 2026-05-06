@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In — Ordering System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root{--neon:#00F5A0;--neon2:#00D9F5;--neon3:#7B61FF;--dark:#080B14;--dark2:#0D1120;--glass:rgba(255,255,255,0.04);--glass-border:rgba(255,255,255,0.08);--text:#F0F4FF;--text2:#8892AA;--red:#FF4D6A;}
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;background:var(--dark);overflow:hidden;}
+        body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,245,160,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,160,0.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0;}
+        .orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;}
+        .orb-1{width:500px;height:500px;background:radial-gradient(circle,rgba(0,245,160,0.15) 0%,transparent 70%);top:-100px;right:-100px;animation:orbFloat 20s ease-in-out infinite alternate;}
+        .orb-2{width:400px;height:400px;background:radial-gradient(circle,rgba(123,97,255,0.12) 0%,transparent 70%);bottom:-80px;left:-80px;animation:orbFloat 15s ease-in-out infinite alternate-reverse;}
+        .orb-3{width:300px;height:300px;background:radial-gradient(circle,rgba(0,217,245,0.1) 0%,transparent 70%);top:40%;left:30%;animation:orbFloat 18s ease-in-out infinite alternate;}
+        @keyframes orbFloat{0%{transform:translate(0,0) scale(1);}100%{transform:translate(40px,-50px) scale(1.1);}}
+        .left-panel{width:52%;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px;flex-shrink:0;z-index:1;}
+        .panel-content{position:relative;z-index:2;max-width:420px;}
+        .panel-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,245,160,0.08);border:1px solid rgba(0,245,160,0.2);border-radius:100px;padding:6px 16px;font-size:11px;font-weight:600;color:var(--neon);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:32px;}
+        .panel-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--neon);box-shadow:0 0 8px var(--neon);animation:pulse 2s ease-in-out infinite;}
+        @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
+        .panel-heading{font-family:'Syne',sans-serif;font-size:56px;font-weight:800;color:var(--text);line-height:1.05;letter-spacing:-2px;margin-bottom:20px;}
+        .panel-heading .accent{background:linear-gradient(135deg,var(--neon),var(--neon2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+        .panel-desc{font-size:15px;color:var(--text2);line-height:1.7;margin-bottom:48px;}
+        .feature-list{display:flex;flex-direction:column;gap:16px;}
+        .feature-item{display:flex;align-items:center;gap:14px;font-size:13.5px;color:var(--text2);}
+        .feature-dot{width:32px;height:32px;border-radius:8px;background:rgba(0,245,160,0.08);border:1px solid rgba(0,245,160,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;}
+        .v-line{width:1px;background:linear-gradient(180deg,transparent,rgba(255,255,255,0.08) 30%,rgba(255,255,255,0.08) 70%,transparent);align-self:stretch;flex-shrink:0;z-index:1;}
+        .right-panel{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 40px;position:relative;z-index:1;}
+        .login-box{width:100%;max-width:400px;background:rgba(13,17,32,0.8);border:1px solid var(--glass-border);border-radius:24px;padding:48px 44px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 0 0 1px rgba(0,245,160,0.05),0 40px 80px rgba(0,0,0,0.4);position:relative;overflow:hidden;}
+        .login-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--neon),transparent);opacity:0.4;}
+        .brand-mark{display:flex;align-items:center;gap:10px;margin-bottom:36px;}
+        .brand-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--neon),var(--neon2));border-radius:10px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(0,245,160,0.3);}
+        .brand-icon svg{width:18px;height:18px;fill:none;stroke:#080B14;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+        .brand-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);}
+        .login-heading{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--text);letter-spacing:-0.8px;line-height:1.2;margin-bottom:6px;}
+        .login-heading span{background:linear-gradient(90deg,var(--neon),var(--neon2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+        .login-sub{font-size:13px;color:var(--text2);margin-bottom:36px;}
+        .form-group{margin-bottom:24px;position:relative;}
+        .form-label{display:block;font-size:10.5px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px;}
+        .input-wrap{position:relative;}
+        .form-input{width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:400;transition:border-color 0.2s,background 0.2s,box-shadow 0.2s;outline:none;}
+        .form-input::placeholder{color:rgba(136,146,170,0.5);}
+        .form-input:focus{border-color:rgba(0,245,160,0.4);background:rgba(0,245,160,0.04);box-shadow:0 0 0 3px rgba(0,245,160,0.08);}
+        .input-line{display:none;}
+        .error-msg{display:flex;align-items:center;gap:8px;background:rgba(255,77,106,0.1);border:1px solid rgba(255,77,106,0.25);color:#FF8096;padding:11px 14px;border-radius:10px;font-size:12.5px;font-weight:500;margin-bottom:20px;}
+        .login-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--neon),var(--neon2));color:#080B14;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:transform 0.15s,box-shadow 0.2s;box-shadow:0 4px 24px rgba(0,245,160,0.25);margin-top:8px;}
+        .login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,245,160,0.4);}
+        .login-btn:active{transform:translateY(0);}
+        .divider{display:flex;align-items:center;gap:12px;margin:28px 0 20px;color:rgba(136,146,170,0.4);font-size:11px;letter-spacing:0.5px;}
+        .divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.06);}
+        .register-link{text-align:center;font-size:13px;color:var(--text2);}
+        .register-link a{font-weight:600;color:var(--neon);text-decoration:none;transition:opacity 0.15s;}
+        .register-link a:hover{opacity:0.75;}
+        @media(max-width:860px){.left-panel{display:none;}.right-panel{padding:32px 20px;}.login-box{padding:40px 32px 36px;}body{overflow:auto;}}
+    </style>
+</head>
+<body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="left-panel">
+        <div class="panel-content">
+            <div class="panel-badge">Management Portal</div>
+            <h1 class="panel-heading">Run your<br>orders <span class="accent">smarter.</span></h1>
+            
+            </div>
+        </div>
+    </div>
+    <div class="v-line"></div>
+    <div class="right-panel">
+        <div class="login-box">
+            <div class="brand-mark">
+                <div class="brand-icon"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg></div>
+                <div class="brand-name">Ordering System</div>
+            </div>
+            <h1 class="login-heading">Welcome<br><span>back.</span></h1>
+            <p class="login-sub">Sign in to continue to your dashboard</p>
+            <form action="/login" method="post" autocomplete="off">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <div class="input-wrap">
+                        <input type="text" id="username" name="username" class="form-input" placeholder="Enter your username" required autocomplete="new-password">
+                        <span class="input-line"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="input-wrap">
+                        <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" required autocomplete="new-password">
+                        <span class="input-line"></span>
+                    </div>
+                </div>
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+            <div class="divider">or</div>
+            <div class="register-link">Don't have an account? <a href="/register">Create one here</a></div>
+        </div>
+    </div>
+    <script>
+        function clearFields(){const u=document.getElementById('username');const p=document.getElementById('password');if(u)u.value='';if(p)p.value='';}
+        document.addEventListener('DOMContentLoaded',()=>{clearFields();setTimeout(clearFields,100);setTimeout(clearFields,500);});
+        window.addEventListener('load',()=>{clearFields();setTimeout(clearFields,100);});
+    </script>
+</body>
+</html>
